@@ -37,6 +37,9 @@ variable "backend_private_subnet" {
 
 }
 
+#* ELASTIC IP
+variable "elastic_ip_name" {}
+
 #* AWS GATEWAYS
 variable "dmz_igw_name" {}
 
@@ -44,3 +47,7 @@ variable "dmz_igw_name" {}
 variable "dmz_route_table_name" {}
 variable "frontend_route_table_name" {}
 variable "backend_route_table_name" {}
+
+
+#* AWS KEY PAIR
+variable "ssh_public_key" {}
