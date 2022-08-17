@@ -18,35 +18,54 @@ resource "aws_instance" "ec2_bastion_host" {
   associate_public_ip_address = true
   key_name                    = aws_key_pair.jazz.key_name
   tags = {
-    "Name" = "Jazz -EC2 Instance - Amazon Linux 2"
+    "Name" = "Jazz-bastion-host"
   }
 }
+
+
 
 
 #* Web app
-resource "aws_instance" "ec2_bastion_host" {
+resource "aws_instance" "web_app" {
   ami                         = "ami-0ff89c4ce7de192ea"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.front_end_private_subnet.id
-  vpc_security_group_ids      = [aws_security_group]
-  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.frontend_private_sec_grp.id]
+  associate_public_ip_address = false
   key_name                    = aws_key_pair.jazz.key_name
+
   tags = {
-    "Name" = "Jazz -EC2 Instance - Amazon Linux 2"
+    "Name" = "Jazz-web-app"
   }
 }
+
+
 
 
 
 #* RDS MYSQL
-# resource "aws_db_instance" "default" {
-#   allocated_storage    = 10
-#   engine               = "mysql"
-#   engine_version       = "5.7"
-#   instance_class       = "db.t2.micro"
-#   name                 = "mydb"
-#   username             = "foo"
-#   password             = "foobarbaz"
-#   parameter_group_name = "default.mysql5.7"
-#   skip_final_snapshot  = true
-# }
+resource "aws_db_subnet_group" "Jazz_subnet_group_1" {
+  subnet_ids = [aws_subnet.front_end_private_subnet.id, aws_subnet.back_end_private_subnet.id]
+
+  description = "Subnet for Database instance"
+  tags = {
+    Name = "Jazz Database Subnets"
+  }
+}
+
+
+
+resource "aws_db_instance" "jazz-mysql" {
+  db_subnet_group_name   = aws_db_subnet_group.Jazz_subnet_group_1.name
+  vpc_security_group_ids = [aws_security_group.backend_sec_grp.id]
+  multi_az               = false
+  allocated_storage      = 20
+  identifier             = "jazz-mysqldb"
+  engine                 = "mysql"
+  engine_version         = "8.0.28"
+  instance_class         = "db.t3.micro"
+  username               = "admin"
+  password               = "admin123."
+  parameter_group_name   = "default.mysql8.0"
+  skip_final_snapshot    = true
+}

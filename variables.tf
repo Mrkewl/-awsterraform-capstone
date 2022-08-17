@@ -13,8 +13,8 @@ variable "cidr_block" {
 
 #* AWS SUBNETS
 variable "dmz_public_subnet_availability_zone" {}
-variable "frontend_public_subnet_availability_zone" {}
-variable "backend_public_subnet_availability_zone" {}
+variable "frontend_private_subnet_availability_zone" {}
+variable "backend_private_subnet_availability_zone" {}
 variable "dmz_public_subnet_name" {}
 variable "frontend_private_subnet_name" {}
 variable "backend_private_subnet_name" {}

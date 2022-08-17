@@ -8,8 +8,6 @@ resource "aws_eip" "nat_elastic_ip" {
 }
 
 
-
-
 #* INTERNET GATEWAY FOR PUBLIC SUBNET
 resource "aws_internet_gateway" "dmz_igw" {
   vpc_id = aws_vpc.jazz_capstone.id
@@ -20,9 +18,10 @@ resource "aws_internet_gateway" "dmz_igw" {
 #* Network Address Translation
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.nat_elastic_ip.id
-  subnet_id     = aws_subnet.front_end_private_subnet.id
+  subnet_id     = aws_subnet.dmz_public_subnet.id
   depends_on = [
-    aws_eip.nat_elastic_ip
+    aws_eip.nat_elastic_ip,
+    aws_internet_gateway.dmz_igw
   ]
 }
 

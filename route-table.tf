@@ -15,7 +15,10 @@ resource "aws_route_table" "dmz_route_table" {
 #? ROUTE TABLE FRONTEND
 resource "aws_route_table" "frontend_route_table" {
   vpc_id = aws_vpc.jazz_capstone.id
-
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.ngw.id
+  }
   tags = {
     "Name" = var.frontend_route_table_name
   }
@@ -25,6 +28,10 @@ resource "aws_route_table" "frontend_route_table" {
 resource "aws_route_table" "backend_route_table" {
   vpc_id = aws_vpc.jazz_capstone.id
 
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.ngw.id
+  }
   tags = {
     "Name" = var.backend_route_table_name
   }
