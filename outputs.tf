@@ -9,11 +9,23 @@ output "vpc_id" {
     sensitive = false
 }
 
-# output "ami_id" {
-#     description = "ID of AMI"
-#     value = aws_instance.my_vm.ami
-#     sensitive = false
-# }
+output "lb_address" {
+    description = "loadbalancer address"
+    value = aws_lb.jazz_alb.dns_name
+  
+}
+
+output "rds_endpoint" {
+    description = "rds_endpoint"
+    value = aws_db_instance.jazz-mysql.address
+    sensitive = false
+}
+
+output "web_app_instance" {
+    description = "private ip"
+    value = aws_instance.web_app.private_ip
+  
+}
 
 # output "" {
 #     description = "IP of load balancer"

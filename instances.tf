@@ -11,12 +11,13 @@ resource "aws_key_pair" "jazz" {
 
 #* Bastion host
 resource "aws_instance" "ec2_bastion_host" {
-  ami                         = "ami-0ff89c4ce7de192ea"
+  ami                         = "ami-090fa75af13c156b4"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.dmz_public_subnet.id
   vpc_security_group_ids      = [aws_security_group.jazz_bastion_sec_grp.id]
   associate_public_ip_address = true
   key_name                    = aws_key_pair.jazz.key_name
+  user_data                   = file("./web-app-entrypoint.sh")
   tags = {
     "Name" = "Jazz-bastion-host"
   }
@@ -27,13 +28,13 @@ resource "aws_instance" "ec2_bastion_host" {
 
 #* Web app
 resource "aws_instance" "web_app" {
-  ami                         = "ami-0ff89c4ce7de192ea"
+  ami                         = "ami-090fa75af13c156b4"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.front_end_private_subnet.id
   vpc_security_group_ids      = [aws_security_group.frontend_private_sec_grp.id]
   associate_public_ip_address = false
   key_name                    = aws_key_pair.jazz.key_name
-user_data = file("./web-app-entrypoint.sh")
+  user_data                   = file("./web-app-entrypoint-2.sh")
   tags = {
     "Name" = "Jazz-web-app"
   }
@@ -56,7 +57,7 @@ resource "aws_db_subnet_group" "Jazz_subnet_group_1" {
 
 
 resource "aws_db_instance" "jazz-mysql" {
-  db_subnet_group_name   = aws_db_subnet_group.Jazz_subnet_group_1.name
+  db_subnet_group_name   = aws_db_subnet_group.Jazz_subnet_group_1.id
   vpc_security_group_ids = [aws_security_group.backend_sec_grp.id]
   multi_az               = false
   allocated_storage      = 20
