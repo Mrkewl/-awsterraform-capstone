@@ -33,7 +33,7 @@ resource "aws_instance" "web_app" {
   vpc_security_group_ids      = [aws_security_group.frontend_private_sec_grp.id]
   associate_public_ip_address = false
   key_name                    = aws_key_pair.jazz.key_name
-
+user_data = file("./web-app-entrypoint.sh")
   tags = {
     "Name" = "Jazz-web-app"
   }
