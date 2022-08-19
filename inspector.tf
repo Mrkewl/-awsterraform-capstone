@@ -18,6 +18,6 @@ resource "aws_inspector_assessment_target" "jazz_capstone_assessment_target" {
 resource "aws_inspector_assessment_template" "jazz_capstone_assessment_template" {
   name               = "jazz Capstone Assessment Template"
   duration           = 3600
-  rules_package_arns = []
+  rules_package_arns = ["arn:aws:inspector:us-east-1:316112463485:rulespackage/0-gEjTy7T7"]
   target_arn         = aws_inspector_assessment_target.jazz_capstone_assessment_target.arn
 }

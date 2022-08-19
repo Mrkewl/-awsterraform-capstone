@@ -1,7 +1,7 @@
 data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "jazz_s3_cloudtrail" {
-  bucket        = "jazz-s3-cloudtrail"
+  bucket        = "jazz-s3-cloudtrail--a"
   force_destroy = true
 }
 resource "aws_cloudtrail" "jazz_cloudtrail" {

@@ -61,7 +61,7 @@ resource "aws_db_instance" "jazz-mysql" {
   vpc_security_group_ids = [aws_security_group.backend_sec_grp.id]
   multi_az               = false
   allocated_storage      = 20
-  identifier             = "jazz-mysqldb"
+  identifier             = "jazz-mysqldb-now"
   engine                 = "mysql"
   engine_version         = "8.0.28"
   instance_class         = "db.t3.micro"

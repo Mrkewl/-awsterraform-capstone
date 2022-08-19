@@ -6,6 +6,6 @@ resource "aws_securityhub_standards_subscription" "jazz_securityhub_foundationbe
 }
 
 resource "aws_securityhub_standards_subscription" "jazz_securityhub_bestpractice" {
-  standards_arn = "arn:aws:securityhub:ap-east-1::standards/aws-foundational-security-best-practices/v/1.0.0"
+  standards_arn = "arn:aws:securityhub:us-east-1::standards/aws-foundational-security-best-practices/v/1.0.0"
   depends_on    = [aws_securityhub_account.jazz_securityhub]
 }

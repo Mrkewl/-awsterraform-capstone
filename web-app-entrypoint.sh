@@ -1,3 +1,3 @@
 #!/bin/bash
 sudo yum -y update
-sudo yum install mariadb
+sudo yum -y install mariadb
